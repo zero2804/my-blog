@@ -1,12 +1,16 @@
-// src/app/posts/[slug]/page.tsx
 import { posts } from '../../../../data/posts';
 
 type Props = {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 };
 
-export default async function PostPage({ params }: Promise<Props>) {
-  // Разворачиваем Promise для params
+export async function generateStaticParams() {
+  return posts.map((post) => ({
+    slug: post.slug,
+  }));
+}
+
+export default async function PostPage({ params }: Props) {
   const { slug } = await params;
 
   const post = posts.find(p => p.slug === slug);
@@ -15,9 +19,10 @@ export default async function PostPage({ params }: Promise<Props>) {
 
   return (
     <main className="max-w-4xl mx-auto p-4">
-      <h1 className="text-3xl font-bold">{post.title}</h1>
-      <p className="text-gray-600">{post.date}</p>
-      <article className="mt-6 prose max-w-none">
+      <h1 className="text-3xl font-bold mb-2">{post.title}</h1>
+      <p className="text-gray-600 mb-6">{post.date}</p>
+      <p className="text-lg text-gray-700 mb-6">{post.description}</p>
+      <article className="prose max-w-none">
         {post.content ?? 'Контент пока не добавлен'}
       </article>
     </main>
