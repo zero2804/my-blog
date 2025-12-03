@@ -1,8 +1,8 @@
-import type { NextConfig } from "next";
+import { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  /* config options here */
-  reactCompiler: true,
+  // Здесь можно добавить другие настройки, если нужно
 };
+
 
 export default nextConfig;
